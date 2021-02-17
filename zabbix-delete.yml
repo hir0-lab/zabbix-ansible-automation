@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: delete host 
+      local_action:
+        module: zabbix_host
+        server_url: http://192.168.100.14/zabbix
+        login_user: Admin
+        login_password: zabbix
+        host_name: router
+        visible_name: router
+        state: absent
