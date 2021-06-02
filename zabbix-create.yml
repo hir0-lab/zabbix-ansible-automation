@@ -1,0 +1,34 @@
+---
+- hosts: zabbix
+  user: root
+  connection: local
+  tasks:
+    - name: create host 
+      local_action:
+        module: zabbix_host
+        server_url: http://192.168.100.14/zabbix
+        login_user: Admin
+        login_password: zabbix
+        host_name: router
+        visible_name: router
+        description: hostmake
+        host_groups: cisco_router
+        link_templates: Template Net Cisco IOS SNMPv2
+        status: enabled
+        state: present
+        inventory_mode: disabled
+        ipmi_authtype: null 
+        ipmi_privilege: 2
+        interfaces:
+          - bulk: 1
+            details:
+                community: '{$SNMP_COMMUNITY}'
+            type: '2'
+            main: 1
+            useip: 1
+            ip: "192.168.100.23"
+            dns: ""
+            port: "161"
+        macros:
+          - macro: '{$SNMP_COMMUNITY}'
+            value: router
